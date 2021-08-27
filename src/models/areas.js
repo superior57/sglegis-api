@@ -10,7 +10,9 @@ module.exports = function(sequelize, DataTypes) {
     },
     area_name: {
       type: DataTypes.STRING(100),
-      allowNull: true
+      allowNull: false,
+      unique: true,
+      comment: 'The Management System (former Area).'
     }
   }, {
     tableName: 'areas'

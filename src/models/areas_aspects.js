@@ -10,7 +10,8 @@ module.exports = function(sequelize, DataTypes) {
     },
     area_aspect_name: {
       type: DataTypes.STRING(100),
-      allowNull: true
+      allowNull: false,
+      comment: 'The name of aspect'
     },
     area_id: {
       type: DataTypes.INTEGER,
@@ -18,7 +19,8 @@ module.exports = function(sequelize, DataTypes) {
       references: {
         model: 'areas',
         key: 'area_id'
-      }
+      },
+      comment: 'The id of the Management System (former Area)'
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -28,6 +30,12 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.DATE,
       allowNull: true
     }
+  }, {
+    indexes: [{
+      unique: true,
+      name: 'uniq_area_name',
+      fields: ['area_id', 'area_aspect_name']
+    }]
   }, {
     tableName: 'areas_aspects'
   });

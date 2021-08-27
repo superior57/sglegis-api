@@ -1,14 +1,14 @@
 const db = require('../models');
-const { unities_areas_aspects } = require('../models');
+const { unites_areas_aspects } = require('../models');
 const base = require('./baseController');
 const sequelize = require('sequelize');
 
 
 exports.get = async (req, res, next) => {
-    let sql = `select ap.*, ar.area_name, uaa.unity_area_aspect_id
+    let sql = `select ap.*, ar.area_name, uaa.unit_area_aspect_id
                 from areas_aspects ap
                 inner join areas ar on (ap.area_id = ar.area_id)
-                inner join unities_areas_aspects uaa on (uaa.area_id = ar.area_id and uaa.area_aspect_id = ap.area_aspect_id and uaa.customer_unity_id = ${req.params.id})                
+                inner join unites_areas_aspects uaa on (uaa.area_id = ar.area_id and uaa.area_aspect_id = ap.area_aspect_id and uaa.customer_unit_id = ${req.params.id})                
                order by ar.area_id, ap.area_aspect_name `;
 
     db.sequelize.query(sql, { type: sequelize.QueryTypes.SELECT }).then(values => {
@@ -29,7 +29,7 @@ exports.get = async (req, res, next) => {
                         {
                             "area_aspect_id": values[k].area_aspect_id,
                             "area_aspect_name": values[k].area_aspect_name,
-                            "unity_area_aspect_id": values[k].unity_area_aspect_id
+                            "unit_area_aspect_id": values[k].unit_area_aspect_id
                         });
                 }
             }
@@ -40,9 +40,9 @@ exports.get = async (req, res, next) => {
 }
 
 exports.post = (req, res, next) => {
-    base.insert(unities_areas_aspects, req, res, next);
+    base.insert(unites_areas_aspects, req, res, next);
 }
 
 exports.delete = (req, res, next) => {
-    base.deleteWithParam(unities_areas_aspects, req, res, next, 'unity_area_aspect_id', req.params.unity_area_aspect_id);
+    base.deleteWithParam(unites_areas_aspects, req, res, next, 'unit_area_aspect_id', req.params.unit_area_aspect_id);
 }

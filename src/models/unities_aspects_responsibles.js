@@ -1,22 +1,22 @@
 /* jshint indent: 2 */
 
 module.exports = function (sequelize, DataTypes) {
-    return sequelize.define('unities_aspects_responsibles', {
-        unity_aspect_responsible_id: {
+    return sequelize.define('unites_aspects_responsibles', {
+        unit_aspect_responsible_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
             primaryKey: true,
             autoIncrement: true
         },
-        customer_unity_id: {
+        customer_unit_id: {
             type: DataTypes.INTEGER,
             allowNull: false
         },
-        unity_aspect_responsible_name: {
+        unit_aspect_responsible_name: {
             type: DataTypes.STRING(50),
             allowNull: true
         },
-        unity_aspect_responsible_email: {
+        unit_aspect_responsible_email: {
             type: DataTypes.STRING(400),
             allowNull: true
         },
@@ -29,6 +29,6 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false
         }
     }, {
-        tableName: 'unities_aspects_responsibles'
+        tableName: 'unites_aspects_responsibles'
     });
 };

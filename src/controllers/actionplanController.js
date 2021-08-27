@@ -73,7 +73,7 @@ function update (actionplans, res) {
 };
 
 async function sendEmail(actionPlanId = "", activityChanges = {}) {
-    const { customer_name, unity_name, actionplan_items, aspect_name } = activityChanges;
+    const { customer_name, unit_name, actionplan_items, aspect_name } = activityChanges;
     if (!isEmpty(actionplan_items)) {
         actionplan_items.forEach(async (actionPlan) => {
             const { email, activity, deadline, responsible, status } = actionPlan;
@@ -93,7 +93,7 @@ async function sendEmail(actionPlanId = "", activityChanges = {}) {
             
             message += `Número: ${actionPlanId} \n\n`;
             message += `Empresa: ${customer_name} \n\n`;
-            message += `Unidade: ${unity_name} \n\n`;
+            message += `Unidade: ${unit_name} \n\n`;
             message += `Assunto: ${aspect_name} \n\n`;
             message += `Atividade: ${activity} \n\n`;
             message += `Vencimento: ${deadline} \n\n`;

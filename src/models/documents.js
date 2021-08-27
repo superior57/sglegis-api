@@ -13,6 +13,12 @@ module.exports = function (sequelize, DataTypes) {
         createdAt: { type: DataTypes.DATE, allowNull: true },
         updatedAt: { type: DataTypes.DATE, allowNull: true}
     }, {
+        indexes: [{
+            unique: true,
+            name: 'uniq_document',
+            fields: ['document_number', 'document_scope_id', 'document_date']
+          }]
+    },{
         tableName: 'documents'
     });
 };

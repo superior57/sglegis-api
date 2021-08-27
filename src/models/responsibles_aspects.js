@@ -12,7 +12,7 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.INTEGER,
             allowNull: false
         },
-        unity_aspect_responsible_id: {
+        unit_aspect_responsible_id: {
             type: DataTypes.INTEGER,
             allowNull: false
         },
