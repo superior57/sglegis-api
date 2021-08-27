@@ -33,6 +33,7 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     indexes: [{
       unique: true,
+      name: 'uniq_area_name',
       fields: ['area_id', 'area_aspect_name']
     }]
   }, {
