@@ -10,11 +10,13 @@ module.exports = function(sequelize, DataTypes) {
     },
     customer_business_name: {
       type: DataTypes.STRING(100),
-      allowNull: true
+      allowNull: false,
+      comment: 'The customer known name'
     },
     customer_cnpj: {
       type: DataTypes.STRING(20),
-      allowNull: true
+      allowNull: false,
+      comment: 'Customer code'
     },
     customer_group_id: {
       type: DataTypes.INTEGER,
@@ -22,7 +24,8 @@ module.exports = function(sequelize, DataTypes) {
       references: {
         model: 'customers_groups',
         key: 'customer_group_id'
-      }
+      },
+      comment: 'The group of its customer belongs to'
     }
   }, {
     tableName: 'customers'

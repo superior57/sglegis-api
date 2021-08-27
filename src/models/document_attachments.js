@@ -8,7 +8,7 @@ module.exports = function (sequelize, DataTypes) {
         },
         attachment_src: {
             type: DataTypes.STRING(268),
-            allowNull: true
+            allowNull: false
         },
         document_id: { type: DataTypes.INTEGER, allowNull: false , Comment: 'ID do documento que este item pertence'}
     }, {

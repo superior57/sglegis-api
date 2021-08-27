@@ -10,7 +10,8 @@ module.exports = function(sequelize, DataTypes) {
     },
     customer_group_name: {
       type: DataTypes.STRING(50),
-      allowNull: true
+      allowNull: false,
+      comment: 'customer group name'
     },
     createdAt: {
       type: DataTypes.DATE,
