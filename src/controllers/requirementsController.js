@@ -23,8 +23,8 @@ const getQuery = (req, res, next) => {
             ds.document_scope_description,
             di.document_item_id, di.document_item_number, di.document_item_status_id, di.document_item_subject, di.document_item_description,
             iaa.area_id, a.area_name, iaa.area_aspect_id, aa.area_aspect_name, d.document_scope_id,                
-            unity_data.area_aspect_id AS aspect, 
-            unity_data.customer_unity_name, unity_data.customer_id, unity_data.customer_unity_id, unity_data.customer_group_id,
+            unit_data.area_aspect_id AS aspect, 
+            unit_data.customer_unit_name, unit_data.customer_id, unit_data.customer_unit_id, unit_data.customer_group_id,
             dst.status_description
             FROM documents d
             INNER JOIN document_items di ON d.document_id = di.document_id
@@ -35,15 +35,15 @@ const getQuery = (req, res, next) => {
             INNER JOIN document_status dst ON dst.status_id = di.document_item_status_id
         INNER JOIN (
             SELECT
-                cu.customer_id, cu.customer_unity_id, cu.customer_unity_uf_id, cu.customer_unity_city_id,
-                uaa.area_id, uaa.area_aspect_id, cu.customer_unity_name, cs.customer_business_name, cs.customer_group_id
-            FROM customers_unities cu
-            INNER JOIN unities_areas_aspects uaa ON cu.customer_unity_id = uaa.customer_unity_id 
+                cu.customer_id, cu.customer_unit_id, cu.customer_unit_uf_id, cu.customer_unit_city_id,
+                uaa.area_id, uaa.area_aspect_id, cu.customer_unit_name, cs.customer_business_name, cs.customer_group_id
+            FROM customers_unites cu
+            INNER JOIN unites_areas_aspects uaa ON cu.customer_unit_id = uaa.customer_unit_id 
             INNER JOIN customers cs ON cu.customer_id = cs.customer_id
-            ) unity_data ON  
-            (d.document_scope_id = 3 /*ESTADUAL*/ AND d.document_city_id = unity_data.customer_unity_city_id AND unity_data.area_aspect_id = iaa.area_aspect_id AND unity_data.area_id = iaa.area_id) OR 
-            (d.document_scope_id = 2 /*ESTADUAL*/ AND d.document_state_id = unity_data.customer_unity_uf_id AND unity_data.area_aspect_id = iaa.area_aspect_id AND unity_data.area_id = iaa.area_id) OR 
-            ((d.document_scope_id = 1 OR d.document_scope_id = 4)/*FEDERAL ou GLOBAL*/ AND iaa.area_aspect_id = unity_data.area_aspect_id AND unity_data.area_id = iaa.area_id)  
+            ) unit_data ON  
+            (d.document_scope_id = 3 /*ESTADUAL*/ AND d.document_city_id = unit_data.customer_unit_city_id AND unit_data.area_aspect_id = iaa.area_aspect_id AND unit_data.area_id = iaa.area_id) OR 
+            (d.document_scope_id = 2 /*ESTADUAL*/ AND d.document_state_id = unit_data.customer_unit_uf_id AND unit_data.area_aspect_id = iaa.area_aspect_id AND unit_data.area_id = iaa.area_id) OR 
+            ((d.document_scope_id = 1 OR d.document_scope_id = 4)/*FEDERAL ou GLOBAL*/ AND iaa.area_aspect_id = unit_data.area_aspect_id AND unit_data.area_id = iaa.area_id)  
         ) AS req_data
     `;
 

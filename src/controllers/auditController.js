@@ -43,9 +43,9 @@ exports.post = (req, res, next) => {
 exports.notifyResponsibles = async (req, res, next) => {
     try {
         const { aspects, auditInformation } = req.body;
-        let sql = `SELECT ra.area_aspect_id, uar.unity_aspect_responsible_email, uar.unity_aspect_responsible_id, aa.area_aspect_name
+        let sql = `SELECT ra.area_aspect_id, uar.unit_aspect_responsible_email, uar.unit_aspect_responsible_id, aa.area_aspect_name
             FROM responsibles_aspects ra
-            LEFT JOIN unities_aspects_responsibles uar ON ra.unity_aspect_responsible_id = uar.unity_aspect_responsible_id
+            LEFT JOIN unites_aspects_responsibles uar ON ra.unit_aspect_responsible_id = uar.unit_aspect_responsible_id
             LEFT JOIN areas_aspects aa ON aa.area_aspect_id = ra.area_aspect_id
             WHERE `;
         if (typeof aspects === 'object' && Array.isArray(aspects)) {
@@ -60,14 +60,14 @@ exports.notifyResponsibles = async (req, res, next) => {
         const values = await db.sequelize.query(sql);
         const responsibles = [];
         values[0].forEach(value => {
-            if (!responsibles.find(r => r.id === value.unity_aspect_responsible_id)) {
+            if (!responsibles.find(r => r.id === value.unit_aspect_responsible_id)) {
                 responsibles.push({
-                    id: value.unity_aspect_responsible_id,
-                    email: value.unity_aspect_responsible_email,
+                    id: value.unit_aspect_responsible_id,
+                    email: value.unit_aspect_responsible_email,
                     aspects: [ value.area_aspect_name ]
                 })
             } else {
-                responsibles.find(r => r.id === value.unity_aspect_responsible_id).aspects.push(value.area_aspect_name);
+                responsibles.find(r => r.id === value.unit_aspect_responsible_id).aspects.push(value.area_aspect_name);
             }
         })
         if (responsibles.length > 0) {

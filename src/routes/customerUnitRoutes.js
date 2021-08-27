@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('../controllers/customerUnityController');
-const controllerAreaAspect = require('../controllers/unityAreaAspectController');
-const controllerResponsible = require('../controllers/unityAspectResponsibleController');
+const controller = require('../controllers/customerunitController');
+const controllerAreaAspect = require('../controllers/unitAreaAspectController');
+const controllerResponsible = require('../controllers/unitAspectResponsibleController');
 const controllerResponsibleAspect = require('../controllers/ResponsibleAspectController');
 
 router.post('/', controller.post);
@@ -16,7 +16,7 @@ router.get('/:id/aspects', controller.getAreasAspects);
 
 router.get('/:id/aspectsonly', controllerAreaAspect.get);
 router.post('/:id/aspects', controllerAreaAspect.post);
-router.delete('/:id/aspects/:unity_area_aspect_id', controllerAreaAspect.delete);
+router.delete('/:id/aspects/:unit_area_aspect_id', controllerAreaAspect.delete);
 
 router.get('/:id/responsibles', controllerResponsible.get);
 router.post('/responsibles', controllerResponsible.post);
