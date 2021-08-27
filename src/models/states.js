@@ -9,11 +9,15 @@ module.exports = function(sequelize, DataTypes) {
     },
     state_name: {
       type: DataTypes.STRING(45),
-      allowNull: true
+      allowNull: false,
+      unique: true,
+      comment: 'Brazilian State name'
     },
     uf: {
       type: DataTypes.STRING(2),
-      allowNull: true
+      allowNull: false,
+      unique: true,
+      comment: 'Initials of brazilian state'
     },
     createdAt: {
       type: DataTypes.DATE,
