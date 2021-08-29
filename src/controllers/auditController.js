@@ -45,7 +45,7 @@ exports.notifyResponsibles = async (req, res, next) => {
         const { aspects, auditInformation } = req.body;
         let sql = `SELECT ra.area_aspect_id, uar.unit_aspect_responsible_email, uar.unit_aspect_responsible_id, aa.area_aspect_name
             FROM responsibles_aspects ra
-            LEFT JOIN unites_aspects_responsibles uar ON ra.unit_aspect_responsible_id = uar.unit_aspect_responsible_id
+            LEFT JOIN units_aspects_responsibles uar ON ra.unit_aspect_responsible_id = uar.unit_aspect_responsible_id
             LEFT JOIN areas_aspects aa ON aa.area_aspect_id = ra.area_aspect_id
             WHERE `;
         if (typeof aspects === 'object' && Array.isArray(aspects)) {

@@ -1,11 +1,11 @@
 const db = require('../models');
-const { unites_aspects_responsibles } = require('../models');
+const { units_aspects_responsibles } = require('../models');
 const base = require('./baseController');
 const sequelize = require('sequelize');
 
 exports.get = async (req, res, next) => {
     const sql = `select *
-    from unites_aspects_responsibles ur
+    from units_aspects_responsibles ur
     join responsibles_aspects ra on (ra.unit_aspect_responsible_id = ur.unit_aspect_responsible_id)
     join areas_aspects aspects on (aspects.area_aspect_id = ra.area_aspect_id)
     where ur.customer_unit_id = ${req.params.id}
@@ -37,12 +37,12 @@ exports.get = async (req, res, next) => {
 }
 
 exports.post = (req, res, next) => {
-    base.insert(unites_aspects_responsibles, req, res, next);
+    base.insert(units_aspects_responsibles, req, res, next);
 }
 
 exports.delete = async (req, res, next) => {
     try {
-        await db.sequelize.query(`delete from unites_aspects_responsibles where (unit_aspect_responsible_id = ${req.params.id})`);
+        await db.sequelize.query(`delete from units_aspects_responsibles where (unit_aspect_responsible_id = ${req.params.id})`);
         await db.sequelize.query(`delete from responsibles_aspects where (unit_aspect_responsible_id = ${req.params.id})`);
         res.status(200).send();
     } catch (error) {

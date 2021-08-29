@@ -7,7 +7,7 @@ router.use(`/${version}/state/`, require('./stateRoutes'));
 router.use(`/${version}/city/`, require('./cityRoutes'));
 router.use(`/${version}/customergroup/`, require('./customerGroupsRoutes'));
 router.use(`/${version}/customer/`, require('./customerRoutes'));
-router.use(`/${version}/customerunit/`, require('./customerunitRoutes'));
+router.use(`/${version}/customerunit/`, require('./customerUnitRoutes'));
 router.use(`/${version}/unitcontact/`, require('./unitContactRoutes'));
 router.use(`/${version}/area/`, require('./areaRoutes'));
 router.use(`/${version}/areaaspect/`, require('./areaAspectRoutes'));

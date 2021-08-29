@@ -1,7 +1,7 @@
 /* jshint indent: 2 */
 
 module.exports = function (sequelize, DataTypes) {
-    return sequelize.define('unites_aspects_responsibles', {
+    return sequelize.define('units_aspects_responsibles', {
         unit_aspect_responsible_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
@@ -29,6 +29,6 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false
         }
     }, {
-        tableName: 'unites_aspects_responsibles'
+        tableName: 'units_aspects_responsibles'
     });
 };

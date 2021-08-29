@@ -1,12 +1,12 @@
-const { customers_unites, unites_contacts } = require('../models');
+const { customers_units, units_contacts } = require('../models');
 const base = require('./baseController');
 const db = require('../models/index');
 const sequelize = require('sequelize');
 
 exports.getAll = (req, res, next) => {
     db.sequelize.query(`select * 
-    from customers_unites u 
-    left join unites_contacts c on (u.customer_unit_id = c.unit_contact_customer_unit_id)
+    from customers_units u 
+    left join units_contacts c on (u.customer_unit_id = c.unit_contact_customer_unit_id)
     join customers cs on (cs.customer_id = u.customer_id)
     join customers_groups cg on (cg.customer_group_id = cs.customer_group_id)    
     order by u.customer_unit_name asc`).then(values => {
@@ -15,14 +15,14 @@ exports.getAll = (req, res, next) => {
 }
 
 exports.getQuery = (req, res, next)=>{
-    base.query(customers_unites, req, res, next);
+    base.query(customers_units, req, res, next);
 }
 
 exports.getAreasAspects = (req, res, next) => {
     let sql = `select ap.*, ar.area_name, uaa.unit_area_aspect_id
                 from areas_aspects ap
                 join areas ar on (ap.area_id = ar.area_id)
-                left join unites_areas_aspects uaa on (uaa.area_id = ar.area_id and uaa.area_aspect_id = ap.area_aspect_id and uaa.customer_unit_id = ${req.params.id})                
+                left join units_areas_aspects uaa on (uaa.area_id = ar.area_id and uaa.area_aspect_id = ap.area_aspect_id and uaa.customer_unit_id = ${req.params.id})                
                order by ar.area_id, ap.area_aspect_name `;
 
     db.sequelize.query(sql, { type: sequelize.QueryTypes.SELECT }).then(values => {
@@ -55,14 +55,14 @@ exports.getAreasAspects = (req, res, next) => {
 }
 
 exports.get = (req, res, next) => {
-    base.get(customers_unites, req, res, next, 'customer_unit_id');
+    base.get(customers_unit, req, res, next, 'customer_unit_id');
 };
 
 exports.getAspects = (req, res, next) => {
     let sql = `select *
     from areas_aspects ap
     join areas ar on (ap.area_id = ar.area_id)
-    left join unites_areas_aspects uaa on (uaa.area_id = ar.area_id and uaa.area_aspect_id = ap.area_aspect_id)
+    left join units_areas_aspects uaa on (uaa.area_id = ar.area_id and uaa.area_aspect_id = ap.area_aspect_id)
     where (uaa.customer_unit_id = ${req.params.id} or uaa.customer_unit_id is null)
     order by ar.area_name, ap.area_aspect_name`;
     db.sequelize.query(sql, { type: sequelize.QueryTypes.SELECT }).then(values => {
@@ -93,12 +93,12 @@ exports.getAspects = (req, res, next) => {
 
 exports.post = (req, res, next) => {
     //fazer insert da unidade
-    let u = customers_unites.create(req.body, { isNewRecord: true })
+    let u = customers_units.create(req.body, { isNewRecord: true })
         .then(values => {
             //agora insert da unitcontact                
             req.body.unit_contact_customer_unit_id = values.customer_unit_id;
            
-            unites_contacts.create(req.body, { isNewRecord: true })
+            units_contacts.create(req.body, { isNewRecord: true })
             .then(v => {
                 res.send(values);
             })
@@ -113,11 +113,11 @@ exports.post = (req, res, next) => {
 }
 
 exports.put = (req, res, next) => {
-    base.update(customers_unites, req, res, next, 'customer_unit_id');
+    base.update(customers_units, req, res, next, 'customer_unit_id');
 }
 
 exports.delete = (req, res, next) => {
-    base.delete(customers_unites, req, res, next, 'customer_unit_id');
+    base.delete(customers_units, req, res, next, 'customer_unit_id');
 }
 
 

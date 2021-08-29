@@ -37,8 +37,8 @@ const getQuery = (req, res, next) => {
             SELECT
                 cu.customer_id, cu.customer_unit_id, cu.customer_unit_uf_id, cu.customer_unit_city_id,
                 uaa.area_id, uaa.area_aspect_id, cu.customer_unit_name, cs.customer_business_name, cs.customer_group_id
-            FROM customers_unites cu
-            INNER JOIN unites_areas_aspects uaa ON cu.customer_unit_id = uaa.customer_unit_id 
+            FROM customers_units cu
+            INNER JOIN units_areas_aspects uaa ON cu.customer_unit_id = uaa.customer_unit_id 
             INNER JOIN customers cs ON cu.customer_id = cs.customer_id
             ) unit_data ON  
             (d.document_scope_id = 3 /*ESTADUAL*/ AND d.document_city_id = unit_data.customer_unit_city_id AND unit_data.area_aspect_id = iaa.area_aspect_id AND unit_data.area_id = iaa.area_id) OR 
