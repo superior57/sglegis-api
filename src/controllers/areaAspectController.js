@@ -1,4 +1,5 @@
 const { areas_aspects, areas } = require('../models');
+const options = require('./queryoptions');
 const base = require('./baseController');
 const db = require('../models/index');
 const sequelize = require('sequelize');
