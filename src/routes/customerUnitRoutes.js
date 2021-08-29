@@ -3,7 +3,7 @@ const router = express.Router();
 const controller = require('../controllers/customerUnitController');
 const controllerAreaAspect = require('../controllers/unitAreaAspectController');
 const controllerResponsible = require('../controllers/unitAspectResponsibleController');
-const controllerResponsibleAspect = require('../controllers/responsibleAspectController');
+const controllerResponsibleAspect = require('../controllers/Porra');
 
 router.post('/', controller.post);
 router.get('/', controller.getAll);
