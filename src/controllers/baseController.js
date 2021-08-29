@@ -105,6 +105,16 @@ exports.update = (model, req, res, next, fieldId) => {
         });
 }
 
+exports.upsert = (model, req, res, next) => {
+    model.upsert(req.body, { returning: true })
+        .then(values => {
+            res.send(values);
+        })
+        .catch(err => {
+            next(err);
+        });
+}
+
 exports.delete = (model, req, res, next, fieldId) => {
     model.destroy(options.where(fieldId, req.params.id))
         .then(values => {
