@@ -22,6 +22,6 @@ router.get('/:id/responsibles', controllerResponsible.get);
 router.post('/responsibles', controllerResponsible.post);
 router.delete('/responsibles/:id', controllerResponsible.delete);
 
-//router.post('/responsibleaspects', controllerResponsibleAspect.post);
+router.post('/responsibleaspects', controllerResponsibleAspect.post);
 
 module.exports = router;
