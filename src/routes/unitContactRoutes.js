@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('../controllers/contactunitController');
+const controller = require('../controllers/contactUnitController');
 
 router.post('/', controller.post);
 router.get('/', controller.getAll);
