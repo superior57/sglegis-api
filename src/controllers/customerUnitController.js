@@ -98,7 +98,7 @@ exports.post = (req, res, next) => {
             //agora insert da unitcontact                
             req.body.unit_contact_customer_unit_id = values.customer_unit_id;
            
-            units_contacts.upsert(req.body, { isNewRecord: true })
+            units_contacts.create(req.body, { isNewRecord: true })
             .then(v => {
                 res.send(values);
             })
@@ -113,12 +113,12 @@ exports.post = (req, res, next) => {
 }
 
 exports.put = (req, res, next) => {
-    let u = customers_units.upsert(req.body)
+    let u = customers_units.update(req.body, { where: { customer_unit_id: req.body.customer_unit_id } })
         .then(values => {
             //agora insert da unitcontact                
             req.body.unit_contact_customer_unit_id = (values.customer_unit_id ? values.customer_unit_id : req.body.customer_unit_id);
            
-            units_contacts.upsert(req.body, { returning: true })
+            units_contacts.update(req.body, {where:{unit_contact_customer_unit_id: req.body.unit_contact_customer_unit_id } })
             .then(v => {
                 res.send(values);
             })

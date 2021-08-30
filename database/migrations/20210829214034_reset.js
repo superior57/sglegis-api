@@ -37,7 +37,7 @@ const Sequelize = require("sequelize");
 const info = {
   revision: 1,
   name: "reset",
-  created: "2021-08-29T13:05:51.010Z",
+  created: "2021-08-29T21:40:34.052Z",
   comment: "",
 };
 
@@ -61,7 +61,7 @@ const migrationCommands = (transaction) => [
           allowNull: false,
         },
         activity: {
-          type: Sequelize.TEXT,
+          type: Sequelize.STRING(5000),
           field: "activity",
           comment: "The activity description",
           allowNull: false,
@@ -332,13 +332,13 @@ const migrationCommands = (transaction) => [
           allowNull: false,
         },
         document_item_subject: {
-          type: Sequelize.TEXT,
+          type: Sequelize.STRING(500),
           field: "document_item_subject",
           Comment: "Assunto do item do documento",
           allowNull: false,
         },
         document_item_number: {
-          type: Sequelize.TEXT,
+          type: Sequelize.STRING(50),
           field: "document_item_number",
           Comment: "Código de identificação do documento (livre)",
           allowNull: false,
@@ -400,7 +400,7 @@ const migrationCommands = (transaction) => [
           allowNull: false,
         },
         document_scope_description: {
-          type: Sequelize.TEXT,
+          type: Sequelize.STRING(100),
           field: "document_scope_description",
           comment:
             "Scope is the scope of the legal requirement in relation to the territory",
@@ -434,7 +434,7 @@ const migrationCommands = (transaction) => [
           allowNull: false,
         },
         status_description: {
-          type: Sequelize.TEXT,
+          type: Sequelize.STRING(100),
           field: "status_description",
           comment: "The status of document, like, if it is active or not",
           unique: true,
@@ -477,7 +477,7 @@ const migrationCommands = (transaction) => [
           allowNull: true,
         },
         document_number: {
-          type: Sequelize.TEXT,
+          type: Sequelize.STRING(50),
           field: "document_number",
           defaultValue: "S/N",
           allowNull: true,

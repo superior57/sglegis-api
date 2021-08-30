@@ -12,7 +12,7 @@
       "*.*"
     ],
     "env": {
-      "NODE_ENV": "production"
+      "NODE_ENV": "development"
     },
     "ext": "js,json,njk"
   }
