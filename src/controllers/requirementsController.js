@@ -25,7 +25,8 @@ const getQuery = (req, res, next) => {
             iaa.item_area_aspect_id, iaa.area_id, a.area_name, iaa.area_aspect_id, aa.area_aspect_name, d.document_scope_id,                
             unit_data.area_aspect_id AS aspect, 
             unit_data.customer_unit_name, unit_data.customer_id, unit_data.customer_unit_id, unit_data.customer_group_id,
-            dst.status_description
+            dst.status_description,
+            customer_business_name
             FROM documents d
             INNER JOIN document_items di ON d.document_id = di.document_id
             INNER JOIN items_areas_aspects iaa ON di.document_item_id = iaa.document_item_id 
@@ -50,14 +51,14 @@ const getQuery = (req, res, next) => {
 
     console.log(sql);
     
-    for (let i = 0; i < Object.keys(query).length; i ++) {
-        const key = Object.keys(query)[i];
-        if (i == 0) sql += ` WHERE `;
-        if (key.includes('id'))
-            sql += `${key} = '${query[key]}'`;
-        else
-            sql += `${key} LIKE '%${query[key]}%'`;
-        if (i < Object.keys(query).length - 1) sql += ` AND `;           
-    }    
+    // for (let i = 0; i < Object.keys(query).length; i ++) {
+    //     const key = Object.keys(query)[i];
+    //     if (i == 0) sql += ` WHERE `;
+    //     if (key.includes('id'))
+    //         sql += `${key} = '${query[key]}'`;
+    //     else
+    //         sql += `${key} LIKE '%${query[key]}%'`;
+    //     if (i < Object.keys(query).length - 1) sql += ` AND `;           
+    // }    
     base.rawquery(sql, req, res, next);
 }
