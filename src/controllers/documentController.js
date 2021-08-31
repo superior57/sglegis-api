@@ -19,7 +19,7 @@ const getQuery = (req, res, next) => {
     CONCAT(d.document_type, ' ', d.document_number) concat_type_number,
 	d.document_id, d.document_type, d.document_number, d.document_date, d.document_summary, d.document_state_id, d.document_city_id,
 	ds.document_scope_id, ds.document_scope_description,
-	ds2.status_id, ds2.status_description 
+	d.document_status_id, ds2.status_description 
     from documents d
     inner join document_scopes ds on d.document_scope_id = ds.document_scope_id 
     inner join document_status ds2 on d.document_status_id = ds2.status_id
