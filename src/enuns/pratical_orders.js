@@ -1,6 +1,5 @@
-const pratical_orders = {
-        A_VERIFICAR: "A VERIFICAR",
-        SIM: "SIM",
-        NAO: "NÃO",  
-}
-module.exports = { pratical_orders };
+module.exports = [
+        { "id": 1, "desc": "A VERIFICAR" },
+        { "id": 2, "desc": "SIM" },
+        { "id": 3, "desc": "NÃO" },
+]
