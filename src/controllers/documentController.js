@@ -37,10 +37,13 @@ exports.get = (req, res, next) => {
 };
 
 exports.post = (req, res, next) => {
+    req.body.document_date = convertData(req.body.document_date);
     base.insert(documents, req, res, next);
 }
 
 exports.put = (req, res, next) => {
+    req.body.document_date = convertData(req.body.document_date);
+
     base.update(documents, req, res, next, 'document_id');
 }
 
@@ -48,3 +51,17 @@ exports.delete = (req, res, next) => {
     base.delete(documents, req, res, next, 'document_id');
 }
 
+function convertData (strData) {
+
+    addHours = (strData) => {
+       return strData + " 00:00:00"
+    }
+
+    if (strData.includes('-'))
+        return addHours(strData);
+    let dia = strData.substring(0, 2);
+    let mes = strData.substring(2, 4);
+    let ano = strData.substring(4, 8);
+    const newData = `${ano}-${mes}-${dia}`
+    return addHours(newData);
+}
