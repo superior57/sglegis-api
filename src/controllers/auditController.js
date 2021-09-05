@@ -37,10 +37,6 @@ exports.getQuery = (req, res, next)=>{
 }
 
 exports.post = (req, res, next) => {
-    base.insert(audits, req, res, next);
-}
-
-exports.post = (req, res, next) => {
     let audits = req.body;
 
     //if there is no id, so (insert)
