@@ -38,6 +38,7 @@ exports.getQuery = (req, res, next)=>{
 
 exports.post = (req, res, next) => {
     let audits = req.body;
+    let audit_id = req.params.audit_id;
 
     //if there is no id, so (insert)
     if (audits.audit_id <= 0)
@@ -117,17 +118,19 @@ exports.notifyResponsibles = async (req, res, next) => {
 }
 
 exports.getHistoricals = (req, res, next) => {
-    const { document_item_id, area_aspect_id } = req.query;
-    let sql = `SELECT *
-        FROM audits a
-        WHERE document_item_id = ${document_item_id} AND area_aspect_id = ${area_aspect_id}
-        ORDER BY a.updatedAt DESC`
+    const { item_area_aspect_id, customer_unit_id } = req.query;
+    let sql = `select a.audit_id, ai.*,  u.user_name
+    FROM audits a
+    INNER join audit_items ai on ai.audits_audit_id = a.audit_id
+    INNER JOIN users u on ai.user_id = u.user_id 
+    WHERE a.item_area_aspect_id = ${item_area_aspect_id} and a.unit_id = ${customer_unit_id}
+    ORDER BY ai.audit_item_id DESC;`
     db.sequelize.query(sql, { type: sequelize.QueryTypes.SELECT }).then(values => {
         res.send(values);
     }).catch(err => {
         next(err);
     })
-}
+};
 
 const emailToResponsibles = async (responsibles, auditInfo) =>  {
     let message = "\n";

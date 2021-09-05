@@ -26,7 +26,8 @@ const getQuery = (req, res, next) => {
             unit_data.area_aspect_id AS aspect, 
             unit_data.customer_unit_name, unit_data.customer_id, unit_data.customer_unit_id, unit_data.customer_group_id,
             dst.status_description,
-            customer_business_name
+            customer_business_name,
+            a2.audit_id, a2.audit_item_id, a2.audit_conformity, a2.audit_practical_order, a2.audit_control_action, a2.audit_evidnece_compliance, a2.updatedAt, a2.user_id
             FROM documents d
             INNER JOIN document_items di ON d.document_id = di.document_id
             INNER JOIN items_areas_aspects iaa ON di.document_item_id = iaa.document_item_id 
@@ -44,7 +45,18 @@ const getQuery = (req, res, next) => {
             ) unit_data ON  
             (d.document_scope_id = 4 /*MUNICIPAL*/ AND d.document_city_id = unit_data.customer_unit_city_id AND unit_data.area_aspect_id = iaa.area_aspect_id AND unit_data.area_id = iaa.area_id) OR 
             (d.document_scope_id = 3 /*ESTADUAL*/ AND d.document_state_id = unit_data.customer_unit_uf_id AND unit_data.area_aspect_id = iaa.area_aspect_id AND unit_data.area_id = iaa.area_id) OR 
-            ((d.document_scope_id = 1 OR d.document_scope_id = 2)/*FEDERAL ou GLOBAL*/ AND iaa.area_aspect_id = unit_data.area_aspect_id AND unit_data.area_id = iaa.area_id)  
+            ((d.document_scope_id = 1 OR d.document_scope_id = 2)/*FEDERAL ou GLOBAL*/ AND iaa.area_aspect_id = unit_data.area_aspect_id AND unit_data.area_id = iaa.area_id)
+            /* AUDITS */
+            LEFT JOIN (
+				select
+					a.audit_id,a.item_area_aspect_id,
+					ai.audit_item_id,
+					ai.audit_conformity, ai.audit_practical_order, ai.audit_control_action, ai.audit_evidnece_compliance,
+					ai.updatedAt, ai.user_id, a.unit_id
+				from audits a 
+				inner join (select max(ai2.audit_item_id) as audit_item_id, ai2.audits_audit_id from audit_items ai2 group by ai2.audits_audit_id) as ai2 on a.audit_id = ai2.audits_audit_id
+				inner join audit_items ai on ai2.audit_item_id = ai.audit_item_id 
+            ) as a2 on iaa.item_area_aspect_id = a2.item_area_aspect_id and unit_data.customer_unit_id = a2.unit_id
         ) AS req_data
     `;
 
