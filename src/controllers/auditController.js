@@ -40,6 +40,40 @@ exports.post = (req, res, next) => {
     base.insert(audits, req, res, next);
 }
 
+exports.post = (req, res, next) => {
+    let audits = req.body;
+
+    //if there is no id, so (insert)
+    if (audits.audit_id <= 0)
+        insert(audits, res);
+    else
+        update(audits, res);
+};
+
+function insert(audits, res) {
+    db.sequelize.transaction(function (t) {
+        return db.audits.create(audits, { transaction: t }).then(function (new_audit) {
+            //set the new audit_id to the audit_item
+            audits.audit_items.audits_audit_id = new_audit.audit_id;
+            return db.audit_items.create(audits.audit_items, { transaction: t }).then(function (new_item) {
+                res.send(new_item);
+            });
+        });
+    });
+}
+
+function update (audits, res) {
+    db.sequelize.transaction(function (t) {
+        return db.audits.update(audits, { transaction: t, where:{audit_id: audits.audit_id} }).then(function (new_item) {
+            
+            audits.audit_items.audits_audit_id = audits.audit_id;
+            return db.audit_items.create(audits.audit_items, { transaction: t }).then(function (new_item) {
+                res.send(new_item);
+            });
+        });
+    });
+};
+
 exports.notifyResponsibles = async (req, res, next) => {
     try {
         const { aspects, auditInformation } = req.body;
