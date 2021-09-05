@@ -7,7 +7,7 @@ module.exports = function (sequelize, DataTypes) {
     item_area_aspect_id: { type: DataTypes.INTEGER, allowNull: false, comment: 'The key matched document_id x area_id and aspect_id' },
     createdAt: {
       type: DataTypes.DATE,
-      allowNull: true
+      allowNull: false
     },
     updatedAt: {
       type: DataTypes.DATE,
