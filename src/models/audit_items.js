@@ -20,12 +20,3 @@ module.exports = function (sequelize, DataTypes) {
         tableName: 'audit_items'
     });
 };
-/*
-    state_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'states',
-        key: 'state_id'
-      }
-    },*/

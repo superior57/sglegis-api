@@ -185,69 +185,6 @@
                 }
             }
         },
-        "audit_items": {
-            "tableName": "audit_items",
-            "schema": {
-                "audit_item_id": {
-                    "allowNull": false,
-                    "primaryKey": true,
-                    "autoIncrement": true,
-                    "field": "audit_item_id",
-                    "seqType": "Sequelize.INTEGER"
-                },
-                "audits_audit_id": {
-                    "allowNull": false,
-                    "references": {
-                        "model": "audits",
-                        "key": "audit_id"
-                    },
-                    "comment": "The id of audit which this item belongs to",
-                    "field": "audits_audit_id",
-                    "seqType": "Sequelize.INTEGER"
-                },
-                "audit_practical_order": {
-                    "allowNull": true,
-                    "comment": "If the document applies to the unit matched",
-                    "field": "audit_practical_order",
-                    "seqType": "Sequelize.INTEGER"
-                },
-                "audit_conformity": {
-                    "allowNull": true,
-                    "comment": "If the unit matched is in conformity with the matched document item",
-                    "field": "audit_conformity",
-                    "seqType": "Sequelize.INTEGER"
-                },
-                "audit_evidnece_compliance": {
-                    "allowNull": true,
-                    "comment": "If unit is or not in conformity, whats the evidences",
-                    "field": "audit_evidnece_compliance",
-                    "seqType": "Sequelize.TEXT"
-                },
-                "audit_control_action": {
-                    "allowNull": true,
-                    "comment": "Description of which actions is taken about this document on the matched unit",
-                    "field": "audit_control_action",
-                    "seqType": "Sequelize.TEXT"
-                },
-                "user_id": {
-                    "allowNull": false,
-                    "comment": "The user logged who inserted the audit",
-                    "field": "user_id",
-                    "seqType": "Sequelize.INTEGER"
-                },
-                "createdAt": {
-                    "allowNull": false,
-                    "field": "createdAt",
-                    "seqType": "Sequelize.DATE"
-                },
-                "updatedAt": {
-                    "allowNull": true,
-                    "field": "updatedAt",
-                    "seqType": "Sequelize.DATE"
-                }
-            },
-            "indexes": []
-        },
         "audits": {
             "tableName": "audits",
             "schema": {
@@ -258,16 +195,34 @@
                     "field": "audit_id",
                     "seqType": "Sequelize.INTEGER"
                 },
-                "unit_id": {
-                    "allowNull": false,
-                    "comment": "The unit",
-                    "field": "unit_id",
+                "audit_practical_order": {
+                    "allowNull": true,
+                    "field": "audit_practical_order",
                     "seqType": "Sequelize.INTEGER"
                 },
-                "item_area_aspect_id": {
-                    "allowNull": false,
-                    "comment": "The key matched document_id x area_id and aspect_id",
-                    "field": "item_area_aspect_id",
+                "audit_conformity": {
+                    "allowNull": true,
+                    "field": "audit_conformity",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "audit_evidnece_compliance": {
+                    "allowNull": true,
+                    "field": "audit_evidnece_compliance",
+                    "seqType": "Sequelize.TEXT"
+                },
+                "audit_control_action": {
+                    "allowNull": true,
+                    "field": "audit_control_action",
+                    "seqType": "Sequelize.TEXT"
+                },
+                "area_aspect_id": {
+                    "allowNull": true,
+                    "field": "area_aspect_id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "document_item_id": {
+                    "allowNull": true,
+                    "field": "document_item_id",
                     "seqType": "Sequelize.INTEGER"
                 },
                 "createdAt": {
@@ -276,7 +231,7 @@
                     "seqType": "Sequelize.DATE"
                 },
                 "updatedAt": {
-                    "allowNull": true,
+                    "allowNull": false,
                     "field": "updatedAt",
                     "seqType": "Sequelize.DATE"
                 }
@@ -1223,6 +1178,6 @@
     },
     "path": "/Users/cleiton/Work/unity/github/sglegis-api/database/migrations/_current.json",
     "backupPath": "/Users/cleiton/Work/unity/github/sglegis-api/database/migrations/_current_bak.json",
-    "exists": true,
-    "revision": 2
+    "exists": false,
+    "revision": 1
 }
