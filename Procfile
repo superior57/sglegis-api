@@ -1,2 +1,1 @@
-web: npm prestart
-web: npm start
+web: npm prestart && npm start
