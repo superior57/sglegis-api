@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "prestart":"sequelize-cli db:migrate",
     "start": "node ./bin/www",
     "dev": "DEBUG=sglegis-api:* npm start"
   },
