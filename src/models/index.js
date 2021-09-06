@@ -16,8 +16,9 @@ if (env === 'development') {
   sequelize = new Sequelize(config);
 } else {
   sequelize = new Sequelize(config.uri);
-  console.log(`------------>>>>>>>>>>>> Carregado esse: ${config.uri}`)
 }
+console.log(`------------>>>>>>>>>>>> Carregado esse: ${JSON.stringify(config)}`)
+
 
 fs
   .readdirSync(__dirname)
