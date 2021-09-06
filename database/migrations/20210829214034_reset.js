@@ -331,12 +331,6 @@ const migrationCommands = (transaction) => [
           primaryKey: true,
           allowNull: false,
         },
-        document_item_subject: {
-          type: Sequelize.STRING(500),
-          field: "document_item_subject",
-          Comment: "Assunto do item do documento",
-          allowNull: false,
-        },
         document_item_number: {
           type: Sequelize.STRING(50),
           field: "document_item_number",

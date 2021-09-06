@@ -592,12 +592,6 @@
                     "field": "document_item_id",
                     "seqType": "Sequelize.INTEGER"
                 },
-                "document_item_subject": {
-                    "allowNull": false,
-                    "Comment": "Assunto do item do documento",
-                    "field": "document_item_subject",
-                    "seqType": "Sequelize.STRING(500)"
-                },
                 "document_item_number": {
                     "allowNull": false,
                     "Comment": "Código de identificação do documento (livre)",

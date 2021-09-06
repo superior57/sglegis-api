@@ -1,7 +1,6 @@
 module.exports = function (sequelize, DataTypes) {
     return sequelize.define('document_items', {
         document_item_id: { type: DataTypes.INTEGER, allowNull: false, primaryKey: true, autoIncrement: true, Comment: 'Id automático' },
-        document_item_subject: { type: DataTypes.STRING(500), allowNull: false , Comment: 'Assunto do item do documento'},
         document_item_number: { type: DataTypes.STRING(50), allowNull: false , Comment: 'Código de identificação do documento (livre)'},
         document_item_order: { type: DataTypes.INTEGER, allowNull: false , Comment: 'Ordem de exibição na lista de itens'},
         document_item_status_id: { type: DataTypes.INTEGER, allowNull: false , Comment: 'Status do documento (document_status)'},
