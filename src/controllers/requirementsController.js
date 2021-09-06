@@ -21,7 +21,7 @@ const getQuery = (req, res, next) => {
             SELECT 
             d.document_id, d.document_type, d.document_number, d.document_date, d.document_state_id, d.document_city_id, 
             ds.document_scope_description,
-            di.document_item_id, di.document_item_number, di.document_item_status_id, di.document_item_subject, di.document_item_description,
+            di.document_item_id, di.document_item_number, di.document_item_status_id, di.document_item_description,
             iaa.item_area_aspect_id, iaa.area_id, a.area_name, iaa.area_aspect_id, aa.area_aspect_name, d.document_scope_id,                
             unit_data.area_aspect_id AS aspect, 
             unit_data.customer_unit_name, unit_data.customer_id, unit_data.customer_unit_id, unit_data.customer_group_id,
