@@ -17,7 +17,7 @@ if (env === 'development') {
 } else {
   sequelize = new Sequelize(config.uri);
 }
-console.log(`------------>>>>>>>>>>>> Carregado esse: ${JSON.stringify(config)}`)
+console.log(`Database config loaded is "${env}": ${JSON.stringify(config)}`);
 
 
 fs
