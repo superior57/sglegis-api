@@ -117,9 +117,9 @@ exports.put = (req, res, next) => {
         .then(values => {
             //agora insert da unitcontact                
             req.body.unit_contact_customer_unit_id = (values.customer_unit_id ? values.customer_unit_id : req.body.customer_unit_id);
-           
-            units_contacts.update(req.body, {where:{unit_contact_customer_unit_id: req.body.unit_contact_customer_unit_id } })
-            .then(v => {
+
+            units_contacts.update(req.body, { where: { unit_contact_customer_unit_id: req.body.unit_contact_customer_unit_id } })
+            .then(values => {
                 res.send(values);
             })
             .catch(err => {

@@ -27,7 +27,7 @@ const getQuery = (req, res, next) => {
             unit_data.customer_unit_name, unit_data.customer_id, unit_data.customer_unit_id, unit_data.customer_group_id,
             dst.status_description,
             customer_business_name,
-            a2.audit_id, a2.audit_item_id, a2.audit_conformity, a2.audit_practical_order, a2.audit_control_action, a2.audit_evidnece_compliance, a2.updatedAt, a2.user_id
+            a2.audit_id, a2.audit_item_id, a2.audit_conformity, a2.audit_practical_order, a2.audit_control_action, a2.audit_evidnece_compliance, a2.updatedAt as audit_updated_at, a2.user_id as audit_user_id
             FROM documents d
             INNER JOIN document_items di ON d.document_id = di.document_id
             INNER JOIN items_areas_aspects iaa ON di.document_item_id = iaa.document_item_id 
