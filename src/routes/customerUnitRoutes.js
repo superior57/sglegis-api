@@ -7,8 +7,8 @@ const controllerResponsibleAspect = require('../controllers/responsibleAspectCon
 
 router.post('/', controller.post);
 router.get('/', controller.getAll);
-router.get('/:id', controller.get);
 router.get('/query', controller.getQuery);
+router.get('/:id', controller.get);
 router.put('/:id', controller.put);
 router.delete('/:id', controller.delete);
 router.get('/:id/aspects', controller.getAreasAspects);

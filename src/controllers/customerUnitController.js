@@ -55,7 +55,7 @@ exports.getAreasAspects = (req, res, next) => {
 }
 
 exports.get = (req, res, next) => {
-    base.get(customers_unit, req, res, next, 'customer_unit_id');
+    base.get(customers_units, req, res, next, 'customer_unit_id');
 };
 
 exports.getAspects = (req, res, next) => {
