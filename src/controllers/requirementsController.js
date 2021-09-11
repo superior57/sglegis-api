@@ -61,16 +61,17 @@ const getQuery = (req, res, next) => {
     `;
 
 
+    
+    for (let i = 0; i < Object.keys(query).length; i ++) {
+        const key = Object.keys(query)[i];
+        if (i == 0) sql += ` WHERE `;
+        if (key.includes('id'))
+            sql += `${key} = '${query[key]}'`;
+        else
+            sql += `${key} LIKE '%${query[key]}%'`;
+        if (i < Object.keys(query).length - 1) sql += ` AND `;           
+    }
     console.log(sql);
     
-    // for (let i = 0; i < Object.keys(query).length; i ++) {
-    //     const key = Object.keys(query)[i];
-    //     if (i == 0) sql += ` WHERE `;
-    //     if (key.includes('id'))
-    //         sql += `${key} = '${query[key]}'`;
-    //     else
-    //         sql += `${key} LIKE '%${query[key]}%'`;
-    //     if (i < Object.keys(query).length - 1) sql += ` AND `;           
-    // }    
     base.rawquery(sql, req, res, next);
 }
