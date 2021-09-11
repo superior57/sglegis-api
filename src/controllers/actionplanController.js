@@ -34,6 +34,17 @@ exports.getQuery = (req, res, next)=>{
     });
 }
 
+function convertData (strData) {
+    if (strData.includes('-'))
+      return strData;
+    if (strData.includes('/'))
+      strData = strData.replaceAll('/', '');
+    let dia = strData.substring(0, 2);
+    let mes = strData.substring(2, 4);
+    let ano = strData.substring(4, 8);
+    const newData = `${ano}-${mes}-${dia}`
+    return newData;
+}
 
 exports.post = (req, res, next) => {
     let actionplans = req.body;
@@ -51,6 +62,7 @@ function insert(actionplans, res) {
             var items = actionplans.actionplan_items;
             items.forEach(i => {
                 i.actionplan_id = new_action_plan.actionplan_id;
+                i.deadline = convertData(i.deadline);
             });
             sendEmail(new_action_plan.actionplan_id, actionplans.activityChanges);
             return db.actionplan_items.bulkCreate(items, { transaction: t }).then(function (new_item) {
@@ -64,6 +76,9 @@ function update (actionplans, res) {
     db.sequelize.transaction(function (t) {
         return db.actionplans.update(actionplans, { transaction: t, where:{actionplan_id: actionplans.actionplan_id} }).then(function (new_action_plan) {
             var items = actionplans.actionplan_items;
+            items.forEach(i => {
+                i.deadline = convertData(i.deadline);
+            });
             sendEmail(actionplans.actionplan_id, actionplans.activityChanges);
             return db.actionplan_items.bulkCreate(items, { transaction: t, updateOnDuplicate: ["updatedAt", "status"] }).then(function (new_item) {
                 res.send(new_action_plan);
