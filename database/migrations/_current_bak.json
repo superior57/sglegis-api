@@ -58,7 +58,7 @@
                     "seqType": "Sequelize.DATE"
                 }
             },
-            "indexes": []
+            "indexes": {}
         },
         "actionplans": {
             "tableName": "actionplans",
@@ -99,7 +99,7 @@
                     "seqType": "Sequelize.DATE"
                 }
             },
-            "indexes": []
+            "indexes": {}
         },
         "areas": {
             "tableName": "areas",
@@ -129,7 +129,7 @@
                     "seqType": "Sequelize.DATE"
                 }
             },
-            "indexes": []
+            "indexes": {}
         },
         "areas_aspects": {
             "tableName": "areas_aspects",
@@ -185,6 +185,69 @@
                 }
             }
         },
+        "audit_items": {
+            "tableName": "audit_items",
+            "schema": {
+                "audit_item_id": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "field": "audit_item_id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "audits_audit_id": {
+                    "allowNull": false,
+                    "references": {
+                        "model": "audits",
+                        "key": "audit_id"
+                    },
+                    "comment": "The id of audit which this item belongs to",
+                    "field": "audits_audit_id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "audit_practical_order": {
+                    "allowNull": true,
+                    "comment": "If the document applies to the unit matched",
+                    "field": "audit_practical_order",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "audit_conformity": {
+                    "allowNull": true,
+                    "comment": "If the unit matched is in conformity with the matched document item",
+                    "field": "audit_conformity",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "audit_evidnece_compliance": {
+                    "allowNull": true,
+                    "comment": "If unit is or not in conformity, whats the evidences",
+                    "field": "audit_evidnece_compliance",
+                    "seqType": "Sequelize.TEXT"
+                },
+                "audit_control_action": {
+                    "allowNull": true,
+                    "comment": "Description of which actions is taken about this document on the matched unit",
+                    "field": "audit_control_action",
+                    "seqType": "Sequelize.TEXT"
+                },
+                "user_id": {
+                    "allowNull": false,
+                    "comment": "The user logged who inserted the audit",
+                    "field": "user_id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "createdAt": {
+                    "allowNull": false,
+                    "field": "createdAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "updatedAt": {
+                    "allowNull": true,
+                    "field": "updatedAt",
+                    "seqType": "Sequelize.DATE"
+                }
+            },
+            "indexes": {}
+        },
         "audits": {
             "tableName": "audits",
             "schema": {
@@ -195,34 +258,16 @@
                     "field": "audit_id",
                     "seqType": "Sequelize.INTEGER"
                 },
-                "audit_practical_order": {
-                    "allowNull": true,
-                    "field": "audit_practical_order",
+                "unit_id": {
+                    "allowNull": false,
+                    "comment": "The unit",
+                    "field": "unit_id",
                     "seqType": "Sequelize.INTEGER"
                 },
-                "audit_conformity": {
-                    "allowNull": true,
-                    "field": "audit_conformity",
-                    "seqType": "Sequelize.INTEGER"
-                },
-                "audit_evidnece_compliance": {
-                    "allowNull": true,
-                    "field": "audit_evidnece_compliance",
-                    "seqType": "Sequelize.TEXT"
-                },
-                "audit_control_action": {
-                    "allowNull": true,
-                    "field": "audit_control_action",
-                    "seqType": "Sequelize.TEXT"
-                },
-                "area_aspect_id": {
-                    "allowNull": true,
-                    "field": "area_aspect_id",
-                    "seqType": "Sequelize.INTEGER"
-                },
-                "document_item_id": {
-                    "allowNull": true,
-                    "field": "document_item_id",
+                "item_area_aspect_id": {
+                    "allowNull": false,
+                    "comment": "The key matched document_id x area_id and aspect_id",
+                    "field": "item_area_aspect_id",
                     "seqType": "Sequelize.INTEGER"
                 },
                 "createdAt": {
@@ -231,12 +276,12 @@
                     "seqType": "Sequelize.DATE"
                 },
                 "updatedAt": {
-                    "allowNull": false,
+                    "allowNull": true,
                     "field": "updatedAt",
                     "seqType": "Sequelize.DATE"
                 }
             },
-            "indexes": []
+            "indexes": {}
         },
         "ceps": {
             "tableName": "ceps",
@@ -297,7 +342,7 @@
                     "seqType": "Sequelize.DATE"
                 }
             },
-            "indexes": []
+            "indexes": {}
         },
         "cities": {
             "tableName": "cities",
@@ -338,7 +383,7 @@
                     "seqType": "Sequelize.DATE"
                 }
             },
-            "indexes": []
+            "indexes": {}
         },
         "customers": {
             "tableName": "customers",
@@ -383,7 +428,7 @@
                     "seqType": "Sequelize.DATE"
                 }
             },
-            "indexes": []
+            "indexes": {}
         },
         "customers_groups": {
             "tableName": "customers_groups",
@@ -412,7 +457,7 @@
                     "seqType": "Sequelize.DATE"
                 }
             },
-            "indexes": []
+            "indexes": {}
         },
         "customers_units": {
             "tableName": "customers_units",
@@ -489,7 +534,7 @@
                     "seqType": "Sequelize.DATE"
                 }
             },
-            "indexes": []
+            "indexes": {}
         },
         "document_attachments": {
             "tableName": "document_attachments",
@@ -534,7 +579,7 @@
                     "seqType": "Sequelize.DATE"
                 }
             },
-            "indexes": []
+            "indexes": {}
         },
         "document_items": {
             "tableName": "document_items",
@@ -594,7 +639,7 @@
                     "seqType": "Sequelize.DATE"
                 }
             },
-            "indexes": []
+            "indexes": {}
         },
         "document_scopes": {
             "tableName": "document_scopes",
@@ -624,7 +669,7 @@
                     "seqType": "Sequelize.DATE"
                 }
             },
-            "indexes": []
+            "indexes": {}
         },
         "document_status": {
             "tableName": "document_status",
@@ -654,7 +699,7 @@
                     "seqType": "Sequelize.DATE"
                 }
             },
-            "indexes": []
+            "indexes": {}
         },
         "documents": {
             "tableName": "documents",
@@ -775,7 +820,7 @@
                     "seqType": "Sequelize.DATE"
                 }
             },
-            "indexes": []
+            "indexes": {}
         },
         "groups_users": {
             "tableName": "groups_users",
@@ -803,7 +848,7 @@
                     "seqType": "Sequelize.DATE"
                 }
             },
-            "indexes": []
+            "indexes": {}
         },
         "items_areas_aspects": {
             "tableName": "items_areas_aspects",
@@ -841,7 +886,7 @@
                     "seqType": "Sequelize.DATE"
                 }
             },
-            "indexes": []
+            "indexes": {}
         },
         "menus": {
             "tableName": "menus",
@@ -883,7 +928,7 @@
                     "seqType": "Sequelize.DATE"
                 }
             },
-            "indexes": []
+            "indexes": {}
         },
         "menus_groups": {
             "tableName": "menus_groups",
@@ -911,7 +956,7 @@
                     "seqType": "Sequelize.DATE"
                 }
             },
-            "indexes": []
+            "indexes": {}
         },
         "responsibles_aspects": {
             "tableName": "responsibles_aspects",
@@ -944,7 +989,7 @@
                     "seqType": "Sequelize.DATE"
                 }
             },
-            "indexes": []
+            "indexes": {}
         },
         "states": {
             "tableName": "states",
@@ -980,7 +1025,7 @@
                     "seqType": "Sequelize.DATE"
                 }
             },
-            "indexes": []
+            "indexes": {}
         },
         "units_areas_aspects": {
             "tableName": "units_areas_aspects",
@@ -1018,7 +1063,7 @@
                     "seqType": "Sequelize.DATE"
                 }
             },
-            "indexes": []
+            "indexes": {}
         },
         "units_aspects_responsibles": {
             "tableName": "units_aspects_responsibles",
@@ -1056,7 +1101,7 @@
                     "seqType": "Sequelize.DATE"
                 }
             },
-            "indexes": []
+            "indexes": {}
         },
         "units_contacts": {
             "tableName": "units_contacts",
@@ -1104,7 +1149,7 @@
                     "seqType": "Sequelize.DATE"
                 }
             },
-            "indexes": []
+            "indexes": {}
         },
         "users": {
             "tableName": "users",
@@ -1167,11 +1212,11 @@
                     "seqType": "Sequelize.DATE"
                 }
             },
-            "indexes": []
+            "indexes": {}
         }
     },
     "path": "/Users/cleiton/Work/unity/github/sglegis-api/database/migrations/_current.json",
     "backupPath": "/Users/cleiton/Work/unity/github/sglegis-api/database/migrations/_current_bak.json",
-    "exists": false,
-    "revision": 1
+    "exists": true,
+    "revision": 2
 }

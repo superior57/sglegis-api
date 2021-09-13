@@ -16,7 +16,7 @@ module.exports = function (sequelize, DataTypes) {
         indexes: [{
             unique: true,
             name: 'uniq_document',
-            fields: ['document_number', 'document_scope_id', 'document_date']
+            fields: ['document_number', 'document_scope_id', 'document_date', 'document_state_id', 'document_city_id']
           }]
     },{
         tableName: 'documents'

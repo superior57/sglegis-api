@@ -281,7 +281,22 @@
                     "seqType": "Sequelize.DATE"
                 }
             },
-            "indexes": []
+            "indexes": {
+                "12107b411e4d22de04c4762fac5f2490eb90cb4d": {
+                    "unique": true,
+                    "name": "uniq_audit_per_unit",
+                    "fields": [
+                        "item_area_aspect_id",
+                        "unit_id"
+                    ],
+                    "options": {
+                        "indexName": "uniq_audit_per_unit",
+                        "name": "uniq_audit_per_unit",
+                        "indicesType": "UNIQUE",
+                        "type": "UNIQUE"
+                    }
+                }
+            }
         },
         "ceps": {
             "tableName": "ceps",
@@ -768,13 +783,15 @@
                 }
             },
             "indexes": {
-                "9b7f63341ef1272a94e0c72ced6399b6784d81e8": {
+                "6e8d17588d6810ceca4d6f6d1723afd82f91f978": {
                     "unique": true,
                     "name": "uniq_document",
                     "fields": [
                         "document_number",
                         "document_scope_id",
-                        "document_date"
+                        "document_date",
+                        "document_state_id",
+                        "document_city_id"
                     ],
                     "options": {
                         "indexName": "uniq_document",
@@ -1218,5 +1235,5 @@
     "path": "/Users/cleiton/Work/unity/github/sglegis-api/database/migrations/_current.json",
     "backupPath": "/Users/cleiton/Work/unity/github/sglegis-api/database/migrations/_current_bak.json",
     "exists": true,
-    "revision": 2
+    "revision": 3
 }
