@@ -4,17 +4,14 @@ const db = require('../models/index');
 const options = require('./queryoptions');
 
 exports.getAll = (req, res, next) => {
-    //base.getAll(documents, req, res, next);    
-    getQuery(req, res, next);
-}
+    //filter by customer private document
 
-const getQuery = (req, res, next) => {
     const query = {};
     Object.keys(req.query).forEach(key => {
-        if (req.query[key] !== "" && req.query[key] != 'null' && req.query[key] != null ) {
+        if (req.query[key] !== "" && req.query[key] != 'null' && req.query[key] != null) {
             query[key] = req.query[key]
         }
-    })
+    });
 
     let sql = `
     select 
@@ -26,11 +23,14 @@ const getQuery = (req, res, next) => {
     inner join document_scopes ds on d.document_scope_id = ds.document_scope_id 
     inner join document_status ds2 on d.document_status_id = ds2.status_id
     `;
-    // WHERE d.document_privacy_type = 0 OR d.document_privacy_unit_id = 1;
+
+    if (req.params.id)
+        sql += `WHERE (d.document_privacy_type = 0 OR d.document_privacy_unit_id = ${req.params.id})`;
+    else
+        sql += `WHERE 1=1`;
 
     for (let i = 0; i < Object.keys(query).length; i ++) {
         const key = Object.keys(query)[i];
-        if (i == 0) sql += ` WHERE `;
         if (key.includes('id'))
             sql += `${key} = '${query[key]}'`;
         else
@@ -42,12 +42,9 @@ const getQuery = (req, res, next) => {
     console.log(sql);
    
     base.rawquery(sql, req, res, next);
+    
 }
 
-
-exports.get = (req, res, next) => {
-    base.get(documents, req, res, next, 'document_id');
-};
 
 exports.post = (req, res, next) => {
     req.body.document_date = convertData(req.body.document_date);
