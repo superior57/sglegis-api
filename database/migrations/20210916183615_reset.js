@@ -12,7 +12,6 @@ const Sequelize = require("sequelize");
  * createTable() => "document_items", deps: []
  * createTable() => "document_scopes", deps: []
  * createTable() => "document_status", deps: []
- * createTable() => "documents", deps: []
  * createTable() => "groups", deps: []
  * createTable() => "groups_users", deps: []
  * createTable() => "items_areas_aspects", deps: []
@@ -24,12 +23,15 @@ const Sequelize = require("sequelize");
  * createTable() => "units_aspects_responsibles", deps: []
  * createTable() => "units_contacts", deps: []
  * createTable() => "areas_aspects", deps: [areas]
+ * createTable() => "audit_items", deps: [audits]
  * createTable() => "cities", deps: [states]
  * createTable() => "ceps", deps: [cities, states]
  * createTable() => "customers", deps: [customers_groups]
  * createTable() => "customers_units", deps: [cities, states, customers]
+ * createTable() => "documents", deps: [customers_units]
  * createTable() => "users", deps: [customers]
  * addIndex(uniq_area_name) => "areas_aspects"
+ * addIndex(uniq_audit_per_unit) => "audits"
  * addIndex(uniq_document) => "documents"
  *
  */
@@ -37,7 +39,7 @@ const Sequelize = require("sequelize");
 const info = {
   revision: 1,
   name: "reset",
-  created: "2021-08-29T21:40:34.052Z",
+  created: "2021-09-16T18:36:15.406Z",
   comment: "",
 };
 
@@ -194,35 +196,17 @@ const migrationCommands = (transaction) => [
           primaryKey: true,
           allowNull: false,
         },
-        audit_practical_order: {
+        unit_id: {
           type: Sequelize.INTEGER,
-          field: "audit_practical_order",
-          allowNull: true,
+          field: "unit_id",
+          comment: "The unit",
+          allowNull: false,
         },
-        audit_conformity: {
+        item_area_aspect_id: {
           type: Sequelize.INTEGER,
-          field: "audit_conformity",
-          allowNull: true,
-        },
-        audit_evidnece_compliance: {
-          type: Sequelize.TEXT,
-          field: "audit_evidnece_compliance",
-          allowNull: true,
-        },
-        audit_control_action: {
-          type: Sequelize.TEXT,
-          field: "audit_control_action",
-          allowNull: true,
-        },
-        area_aspect_id: {
-          type: Sequelize.INTEGER,
-          field: "area_aspect_id",
-          allowNull: true,
-        },
-        document_item_id: {
-          type: Sequelize.INTEGER,
-          field: "document_item_id",
-          allowNull: true,
+          field: "item_area_aspect_id",
+          comment: "The key matched document_id x area_id and aspect_id",
+          allowNull: false,
         },
         createdAt: {
           type: Sequelize.DATE,
@@ -232,7 +216,7 @@ const migrationCommands = (transaction) => [
         updatedAt: {
           type: Sequelize.DATE,
           field: "updatedAt",
-          allowNull: false,
+          allowNull: true,
         },
       },
       { transaction },
@@ -433,77 +417,6 @@ const migrationCommands = (transaction) => [
           comment: "The status of document, like, if it is active or not",
           unique: true,
           allowNull: false,
-        },
-        createdAt: {
-          type: Sequelize.DATE,
-          field: "createdAt",
-          allowNull: true,
-        },
-        updatedAt: {
-          type: Sequelize.DATE,
-          field: "updatedAt",
-          allowNull: true,
-        },
-      },
-      { transaction },
-    ],
-  },
-  {
-    fn: "createTable",
-    params: [
-      "documents",
-      {
-        document_id: {
-          type: Sequelize.INTEGER,
-          field: "document_id",
-          autoIncrement: true,
-          primaryKey: true,
-          allowNull: false,
-        },
-        document_scope_id: {
-          type: Sequelize.INTEGER,
-          field: "document_scope_id",
-          allowNull: false,
-        },
-        document_type: {
-          type: Sequelize.TEXT,
-          field: "document_type",
-          allowNull: true,
-        },
-        document_number: {
-          type: Sequelize.STRING(50),
-          field: "document_number",
-          defaultValue: "S/N",
-          allowNull: true,
-        },
-        document_date: {
-          type: Sequelize.DATE,
-          field: "document_date",
-          allowNull: false,
-        },
-        document_status_id: {
-          type: Sequelize.INTEGER,
-          field: "document_status_id",
-          allowNull: false,
-        },
-        document_summary: {
-          type: Sequelize.STRING(2000),
-          field: "document_summary",
-          allowNull: false,
-        },
-        document_state_id: {
-          type: Sequelize.INTEGER,
-          field: "document_state_id",
-          Comment:
-            "The region of country document is valid (filled when scope = state)",
-          allowNull: true,
-        },
-        document_city_id: {
-          type: Sequelize.INTEGER,
-          field: "document_city_id",
-          Comment:
-            "The city of region (state) document is valid (filled when scope = city)",
-          allowNull: true,
         },
         createdAt: {
           type: Sequelize.DATE,
@@ -957,6 +870,71 @@ const migrationCommands = (transaction) => [
   {
     fn: "createTable",
     params: [
+      "audit_items",
+      {
+        audit_item_id: {
+          type: Sequelize.INTEGER,
+          field: "audit_item_id",
+          autoIncrement: true,
+          primaryKey: true,
+          allowNull: false,
+        },
+        audits_audit_id: {
+          type: Sequelize.INTEGER,
+          field: "audits_audit_id",
+          comment: "The id of audit which this item belongs to",
+          references: { model: "audits", key: "audit_id" },
+          allowNull: false,
+        },
+        audit_practical_order: {
+          type: Sequelize.INTEGER,
+          field: "audit_practical_order",
+          comment: "If the document applies to the unit matched",
+          allowNull: true,
+        },
+        audit_conformity: {
+          type: Sequelize.INTEGER,
+          field: "audit_conformity",
+          comment:
+            "If the unit matched is in conformity with the matched document item",
+          allowNull: true,
+        },
+        audit_evidnece_compliance: {
+          type: Sequelize.TEXT,
+          field: "audit_evidnece_compliance",
+          comment: "If unit is or not in conformity, whats the evidences",
+          allowNull: true,
+        },
+        audit_control_action: {
+          type: Sequelize.TEXT,
+          field: "audit_control_action",
+          comment:
+            "Description of which actions is taken about this document on the matched unit",
+          allowNull: true,
+        },
+        user_id: {
+          type: Sequelize.INTEGER,
+          field: "user_id",
+          comment: "The user logged who inserted the audit",
+          allowNull: false,
+        },
+        createdAt: {
+          type: Sequelize.DATE,
+          field: "createdAt",
+          allowNull: false,
+        },
+        updatedAt: {
+          type: Sequelize.DATE,
+          field: "updatedAt",
+          allowNull: true,
+        },
+      },
+      { transaction },
+    ],
+  },
+  {
+    fn: "createTable",
+    params: [
       "cities",
       {
         city_id: {
@@ -1160,6 +1138,92 @@ const migrationCommands = (transaction) => [
   {
     fn: "createTable",
     params: [
+      "documents",
+      {
+        document_id: {
+          type: Sequelize.INTEGER,
+          field: "document_id",
+          autoIncrement: true,
+          primaryKey: true,
+          allowNull: false,
+        },
+        document_scope_id: {
+          type: Sequelize.INTEGER,
+          field: "document_scope_id",
+          allowNull: false,
+        },
+        document_type: {
+          type: Sequelize.TEXT,
+          field: "document_type",
+          allowNull: true,
+        },
+        document_number: {
+          type: Sequelize.STRING(50),
+          field: "document_number",
+          defaultValue: "S/N",
+          allowNull: true,
+        },
+        document_date: {
+          type: Sequelize.DATE,
+          field: "document_date",
+          allowNull: false,
+        },
+        document_status_id: {
+          type: Sequelize.INTEGER,
+          field: "document_status_id",
+          allowNull: false,
+        },
+        document_summary: {
+          type: Sequelize.STRING(2000),
+          field: "document_summary",
+          allowNull: false,
+        },
+        document_state_id: {
+          type: Sequelize.INTEGER,
+          field: "document_state_id",
+          comment:
+            "The region of country document is valid (filled when scope = state)",
+          allowNull: true,
+        },
+        document_city_id: {
+          type: Sequelize.INTEGER,
+          field: "document_city_id",
+          comment:
+            "The city of region (state) document is valid (filled when scope = city)",
+          allowNull: true,
+        },
+        document_privacy_type: {
+          type: Sequelize.INTEGER,
+          field: "document_privacy_type",
+          comment:
+            "0 = public (available for all customers) / 1 = private (need to check table document_privacy_customers)",
+          defaultValue: 0,
+          allowNull: false,
+        },
+        document_privacy_unit_id: {
+          type: Sequelize.INTEGER,
+          field: "document_privacy_unit_id",
+          comment: "The unit that owns this document",
+          references: { model: "customers_units", key: "customer_unit_id" },
+          allowNull: true,
+        },
+        createdAt: {
+          type: Sequelize.DATE,
+          field: "createdAt",
+          allowNull: true,
+        },
+        updatedAt: {
+          type: Sequelize.DATE,
+          field: "updatedAt",
+          allowNull: true,
+        },
+      },
+      { transaction },
+    ],
+  },
+  {
+    fn: "createTable",
+    params: [
       "users",
       {
         user_id: {
@@ -1237,8 +1301,28 @@ const migrationCommands = (transaction) => [
   {
     fn: "addIndex",
     params: [
+      "audits",
+      ["item_area_aspect_id", "unit_id"],
+      {
+        indexName: "uniq_audit_per_unit",
+        name: "uniq_audit_per_unit",
+        indicesType: "UNIQUE",
+        type: "UNIQUE",
+        transaction,
+      },
+    ],
+  },
+  {
+    fn: "addIndex",
+    params: [
       "documents",
-      ["document_number", "document_scope_id", "document_date"],
+      [
+        "document_number",
+        "document_scope_id",
+        "document_date",
+        "document_state_id",
+        "document_city_id",
+      ],
       {
         indexName: "uniq_document",
         name: "uniq_document",
@@ -1266,6 +1350,10 @@ const rollbackCommands = (transaction) => [
   {
     fn: "dropTable",
     params: ["areas_aspects", { transaction }],
+  },
+  {
+    fn: "dropTable",
+    params: ["audit_items", { transaction }],
   },
   {
     fn: "dropTable",

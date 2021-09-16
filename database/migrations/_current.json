@@ -656,57 +656,6 @@
             },
             "indexes": []
         },
-        "document_privacy_customers": {
-            "tableName": "document_privacy_customers",
-            "schema": {
-                "document_privacy_id": {
-                    "allowNull": false,
-                    "primaryKey": true,
-                    "autoIncrement": true,
-                    "field": "document_privacy_id",
-                    "seqType": "Sequelize.INTEGER"
-                },
-                "customer_group_id": {
-                    "allowNull": true,
-                    "comment": "The customer group that owns the document",
-                    "field": "customer_group_id",
-                    "seqType": "Sequelize.INTEGER"
-                },
-                "customer_id": {
-                    "allowNull": true,
-                    "comment": "The customer that owns the document",
-                    "field": "customer_id",
-                    "seqType": "Sequelize.INTEGER"
-                },
-                "customer_unit_id": {
-                    "allowNull": true,
-                    "comment": "The customer unit that owns the document",
-                    "field": "customer_unit_id",
-                    "seqType": "Sequelize.INTEGER"
-                },
-                "document_id": {
-                    "allowNull": false,
-                    "references": {
-                        "model": "documents",
-                        "key": "document_id"
-                    },
-                    "comment": "The document that is private",
-                    "field": "document_id",
-                    "seqType": "Sequelize.INTEGER"
-                },
-                "createdAt": {
-                    "allowNull": true,
-                    "field": "createdAt",
-                    "seqType": "Sequelize.DATE"
-                },
-                "updatedAt": {
-                    "allowNull": true,
-                    "field": "updatedAt",
-                    "seqType": "Sequelize.DATE"
-                }
-            },
-            "indexes": []
-        },
         "document_scopes": {
             "tableName": "document_scopes",
             "schema": {
@@ -829,6 +778,16 @@
                     },
                     "comment": "0 = public (available for all customers) / 1 = private (need to check table document_privacy_customers)",
                     "field": "document_privacy_type",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "document_privacy_unit_id": {
+                    "allowNull": true,
+                    "references": {
+                        "model": "customers_units",
+                        "key": "customer_unit_id"
+                    },
+                    "comment": "The unit that owns this document",
+                    "field": "document_privacy_unit_id",
                     "seqType": "Sequelize.INTEGER"
                 },
                 "createdAt": {
@@ -1294,6 +1253,6 @@
     },
     "path": "/Users/cleiton/Work/unity/github/sglegis-api/database/migrations/_current.json",
     "backupPath": "/Users/cleiton/Work/unity/github/sglegis-api/database/migrations/_current_bak.json",
-    "exists": true,
-    "revision": 7
+    "exists": false,
+    "revision": 1
 }

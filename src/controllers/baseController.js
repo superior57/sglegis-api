@@ -29,6 +29,22 @@ exports.get = (model, req, res, next, fieldId) => {
         });
 };
 
+exports.get = (model, req, res, next, fieldId, populate = null) => {
+    model.findAll(
+        options.getOptions(req, fieldId, parseInt(req.params.id))
+    )
+    .then(async (values) => {
+        let resValues = values;
+        if (populate !== null) {
+            resValues = await getPopulate(resValues, populate[0]);
+        }
+        return res.send(resValues)
+    })
+    .catch(err => {
+        next(err);
+    });
+};
+
 /** 
  * Pagination
  *  - offset: the page number
