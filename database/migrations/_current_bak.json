@@ -185,51 +185,6 @@
                 }
             }
         },
-        "audit_attachments": {
-            "tableName": "audit_attachments",
-            "schema": {
-                "audit_attachment_id": {
-                    "allowNull": false,
-                    "primaryKey": true,
-                    "autoIncrement": true,
-                    "field": "audit_attachment_id",
-                    "seqType": "Sequelize.INTEGER"
-                },
-                "audit_attachment_item_id": {
-                    "allowNull": false,
-                    "Comment": "Auditoria que o anexo está associado.",
-                    "field": "audit_attachment_item_id",
-                    "seqType": "Sequelize.INTEGER"
-                },
-                "audit_attachment_description": {
-                    "allowNull": true,
-                    "field": "audit_attachment_description",
-                    "seqType": "Sequelize.STRING(200)"
-                },
-                "audit_attachment_src": {
-                    "allowNull": false,
-                    "field": "audit_attachment_src",
-                    "seqType": "Sequelize.STRING(268)"
-                },
-                "audit_id": {
-                    "allowNull": false,
-                    "Comment": "ID da auditoria que este item pertence",
-                    "field": "audit_id",
-                    "seqType": "Sequelize.INTEGER"
-                },
-                "createdAt": {
-                    "allowNull": false,
-                    "field": "createdAt",
-                    "seqType": "Sequelize.DATE"
-                },
-                "updatedAt": {
-                    "allowNull": false,
-                    "field": "updatedAt",
-                    "seqType": "Sequelize.DATE"
-                }
-            },
-            "indexes": []
-        },
         "audit_items": {
             "tableName": "audit_items",
             "schema": {
@@ -1298,6 +1253,6 @@
     },
     "path": "/Users/cleiton/Work/unity/github/sglegis-api/database/migrations/_current.json",
     "backupPath": "/Users/cleiton/Work/unity/github/sglegis-api/database/migrations/_current_bak.json",
-    "exists": true,
-    "revision": 2
+    "exists": false,
+    "revision": 1
 }
