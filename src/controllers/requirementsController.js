@@ -52,14 +52,14 @@ const getQuery = (req, res, next) => {
         ((d.document_scope_id = 1 OR d.document_scope_id = 2)/*FEDERAL ou GLOBAL*/ AND iaa.area_aspect_id = unit_data.area_aspect_id AND unit_data.area_id = iaa.area_id)
         /* AUDITS */
         LEFT JOIN (
-                            select
-                                    a.audit_id,a.item_area_aspect_id,
-                                    ai.audit_item_id,
-                                    ai.audit_conformity, ai.audit_practical_order, ai.audit_control_action, ai.audit_evidnece_compliance,
-                                    ai.updatedAt, ai.user_id, a.unit_id
-                            from audits a
-                            inner join (select max(ai2.audit_item_id) as audit_item_id, ai2.audits_audit_id from audit_items ai2 group by ai2.audits_audit_id) as ai2 on a.audit_id = ai2.audits_audit_id
-                            inner join audit_items ai on ai2.audit_item_id = ai.audit_item_id
+                    select
+                            a.audit_id,a.item_area_aspect_id,
+                            ai.audit_item_id,
+                            ai.audit_conformity, ai.audit_practical_order, ai.audit_control_action, ai.audit_evidnece_compliance,
+                            ai.updatedAt, ai.user_id, a.unit_id
+                    from audits a
+                    inner join (select max(ai2.audit_item_id) as audit_item_id, ai2.audits_audit_id from audit_items ai2 group by ai2.audits_audit_id) as ai2 on a.audit_id = ai2.audits_audit_id
+                    inner join audit_items ai on ai2.audit_item_id = ai.audit_item_id
         ) as a2 on iaa.item_area_aspect_id = a2.item_area_aspect_id and unit_data.customer_unit_id = a2.unit_id
     ) AS req_data
     `;

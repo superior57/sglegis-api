@@ -23,5 +23,6 @@ router.use(`/${version}/requirements/`, require('./requirementsRouter'));
 router.use(`/${version}/users/`, require('./userRoutes'));
 router.use(`/${version}/audits/`, require('./auditRoutes'));
 router.use(`/${version}/action-plan/`, require('./actionPlanRoutes'));
+router.use(`/${version}/audit-attachment/`, require('./auditAttachmentRoutes'));
 
 module.exports = router;

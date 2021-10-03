@@ -1,5 +1,6 @@
 const { audit_attachments } = require('../models');
 const base = require('./baseController');
+const file = require('../middleware/file');
 
 
 
@@ -16,6 +17,9 @@ exports.getAttachments = (req, res, next) => {
 };
 
 exports.post = (req, res, next) => {
+    file.setFolder('audits');
+    file.fileUploader.single('attachment_file');
+
     req.body.attachment_src = `${String(req.file.destination).replace('uploads/', '')}/${req.file.filename}`;
     req.body.attachment_item_id = 0;
     base.insert(audit_attachments, req, res, next);

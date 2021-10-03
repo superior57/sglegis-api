@@ -6,6 +6,7 @@ const Sequelize = require("sequelize");
  * createTable() => "actionplan_items", deps: []
  * createTable() => "actionplans", deps: []
  * createTable() => "areas", deps: []
+ * createTable() => "audit_attachments", deps: []
  * createTable() => "audits", deps: []
  * createTable() => "customers_groups", deps: []
  * createTable() => "document_attachments", deps: []
@@ -39,7 +40,7 @@ const Sequelize = require("sequelize");
 const info = {
   revision: 1,
   name: "reset",
-  created: "2021-09-16T18:36:15.406Z",
+  created: "2021-10-03T09:43:34.754Z",
   comment: "",
 };
 
@@ -168,6 +169,54 @@ const migrationCommands = (transaction) => [
           field: "area_name",
           comment: "The Management System (former Area).",
           unique: true,
+          allowNull: false,
+        },
+        createdAt: {
+          type: Sequelize.DATE,
+          field: "createdAt",
+          allowNull: false,
+        },
+        updatedAt: {
+          type: Sequelize.DATE,
+          field: "updatedAt",
+          allowNull: false,
+        },
+      },
+      { transaction },
+    ],
+  },
+  {
+    fn: "createTable",
+    params: [
+      "audit_attachments",
+      {
+        audit_attachment_id: {
+          type: Sequelize.INTEGER,
+          field: "audit_attachment_id",
+          autoIncrement: true,
+          primaryKey: true,
+          allowNull: false,
+        },
+        audit_attachment_item_id: {
+          type: Sequelize.INTEGER,
+          field: "audit_attachment_item_id",
+          Comment: "Auditoria que o anexo está associado.",
+          allowNull: false,
+        },
+        audit_attachment_description: {
+          type: Sequelize.STRING(200),
+          field: "audit_attachment_description",
+          allowNull: true,
+        },
+        audit_attachment_src: {
+          type: Sequelize.STRING(268),
+          field: "audit_attachment_src",
+          allowNull: false,
+        },
+        audit_id: {
+          type: Sequelize.INTEGER,
+          field: "audit_id",
+          Comment: "ID da auditoria que este item pertence",
           allowNull: false,
         },
         createdAt: {
@@ -1350,6 +1399,10 @@ const rollbackCommands = (transaction) => [
   {
     fn: "dropTable",
     params: ["areas_aspects", { transaction }],
+  },
+  {
+    fn: "dropTable",
+    params: ["audit_attachments", { transaction }],
   },
   {
     fn: "dropTable",

@@ -3,7 +3,7 @@ const router = express.Router();
 const controller = require('../controllers/documentAttachmentController');
 const file = require('../middleware/file');
 
-file.setFolder('documents');
+// file.setFolder('documents');
 
 router.post('/', file.fileUploader.single('attachment_file'),  controller.post);
 router.get('/', controller.getAll);
