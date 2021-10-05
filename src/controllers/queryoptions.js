@@ -10,9 +10,12 @@ exports.getOptions = (req, key, value) => {
         r.offset = (parseInt(req.query.offset)-1) * parseInt(req.query.limit);
     }
 
-    if (req.query.orderby == undefined || req.query.direction == undefined) {
+    if (req.query.orderby == undefined) {
         r.order = undefined
     } else {
+        if (req.query.direction == undefined)
+            req.query.direction = "asc";
+        
         r.order = [[req.query.orderby, req.query.direction]];
     }
 

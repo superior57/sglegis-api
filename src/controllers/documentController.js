@@ -15,7 +15,6 @@ exports.getAll = (req, res, next) => {
 
     let sql = `
     select 
-    CONCAT(d.document_type, ' ', d.document_number) concat_type_number,
 	d.document_id, d.document_type, d.document_number, d.document_date, d.document_summary, d.document_state_id, d.document_city_id,
 	ds.document_scope_id, ds.document_scope_description,
 	d.document_status_id, ds2.status_description, d.document_privacy_type, d.document_privacy_unit_id
@@ -27,12 +26,15 @@ exports.getAll = (req, res, next) => {
     if (req.params.id)
         sql += `WHERE (d.document_privacy_type = 0 OR d.document_privacy_unit_id = ${req.params.id})`;
     else
-        sql += `WHERE 1=1`;
+        sql += `WHERE 1=1 `;
+    
+    if (Object.keys(query).length > 0)
+        sql += ` AND `;        
 
     for (let i = 0; i < Object.keys(query).length; i ++) {
         const key = Object.keys(query)[i];
         if (key.includes('id'))
-            sql += `${key} = '${query[key]}'`;
+            sql += `d.${key} = '${query[key]}'`;
         else
             sql += `${key} LIKE '%${query[key]}%'`;
         if (i < Object.keys(query).length - 1) sql += ` AND `;           
