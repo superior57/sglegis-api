@@ -9,7 +9,7 @@ exports.getAll = (req, res, next) => {
 }
 
 exports.get = (req, res, next) => {
-    base.get(audit_attachments, req, res, next, 'attachment_id');
+    base.get(audit_attachments, req, res, next, 'audit_attachment_id');
 };
 
 exports.getAttachments = (req, res, next) => {
@@ -17,15 +17,13 @@ exports.getAttachments = (req, res, next) => {
 };
 
 exports.post = (req, res, next) => {
-    file.setFolder('audits');
-    file.fileUploader.single('attachment_file');
+    // file.setFolder('audits');
 
-    req.body.attachment_src = `${String(req.file.destination).replace('uploads/', '')}/${req.file.filename}`;
-    req.body.attachment_item_id = 0;
+    req.body.audit_attachment_src = `${String(req.file.destination).replace('uploads/audits/', '')}/${req.file.filename}`;
     base.insert(audit_attachments, req, res, next);
 }
 
 exports.delete = (req, res, next) => {
-    base.delete(audit_attachments, req, res, next, 'attachment_id');
+    base.delete(audit_attachments, req, res, next, 'audit_attachment_id');
 }
 
