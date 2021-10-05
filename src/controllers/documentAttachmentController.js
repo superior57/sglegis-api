@@ -19,7 +19,7 @@ exports.getAttachments = (req, res, next) => {
 exports.post = (req, res, next) => {
     // file.setFolder('documents');
 
-    req.body.attachment_src = `${String(req.file.destination).replace('uploads/documents', '')}/${req.file.filename}`;
+    req.body.attachment_src = `${String(req.file.destination)}documents/${req.file.filename}`;
     req.body.attachment_item_id = 0;
     base.insert(document_attachments, req, res, next);
 }

@@ -5,6 +5,7 @@ const { isEmpty } = require('../utils/functions');
 const db = require('../models/index');
 const email = require('../config/email');
 const sequelize = require('sequelize');
+const { json } = require('sequelize');
 
 exports.getAll = (req, res, next) => {
     const q = req.query;    
@@ -42,12 +43,12 @@ exports.post = (req, res, next) => {
 
     //if there is no id, so (insert)
     if (audits.audit_id <= 0)
-        insert(audits, res);
+        insert(audits, res, next);
     else
-        update(audits, res);
+        update(audits, res, next);
 };
 
-function insert(audits, res) {
+function insert(audits, res, next) {
     db.sequelize.transaction(function (t) {
         return db.audits.create(audits, { transaction: t }).then(function (new_audit) {
             //set the new audit_id to the audit_item
@@ -59,11 +60,12 @@ function insert(audits, res) {
     });
 }
 
-function update (audits, res) {
+function update (audits, res, next) {
     db.sequelize.transaction(function (t) {
         return db.audits.update(audits, { transaction: t, where:{audit_id: audits.audit_id} }).then(function (new_item) {
             
             audits.audit_items.audits_audit_id = audits.audit_id;
+            audits.audit_items.audit_item_id = undefined;
             return db.audit_items.create(audits.audit_items, { transaction: t }).then(function (new_item) {
                 res.send(new_item);
             });

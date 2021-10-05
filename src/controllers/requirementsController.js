@@ -44,8 +44,17 @@ const getQuery = (req, res, next) => {
             FROM customers_units cu
             INNER JOIN units_areas_aspects uaa ON cu.customer_unit_id = uaa.customer_unit_id
             INNER JOIN customers cs ON cu.customer_id = cs.customer_id
-            LEFT JOIN responsibles_aspects ra on uaa.area_aspect_id = ra.area_aspect_id
-            LEFT JOIN units_aspects_responsibles uar on ra.unit_aspect_responsible_id = uar.unit_aspect_responsible_id
+            LEFT JOIN (
+            	/* RESPONSIBLES PER UNIT AND ASPECTS */
+				 select
+				 	uar.customer_unit_id, 
+				 	ra.area_aspect_id,
+				 	GROUP_CONCAT(uar.unit_aspect_responsible_name SEPARATOR ';') AS unit_aspect_responsible_name,
+				 	GROUP_CONCAT(uar.unit_aspect_responsible_email SEPARATOR ';') AS unit_aspect_responsible_email
+				 from units_aspects_responsibles uar 
+				 inner join responsibles_aspects ra on uar.unit_aspect_responsible_id = ra.unit_aspect_responsible_id
+				 GROUP BY uar.customer_unit_id, ra.area_aspect_id 
+            ) uar ON uar.customer_unit_id = cu.customer_unit_id and uar.area_aspect_id = uaa.area_aspect_id
         ) unit_data ON
         (d.document_scope_id = 4 /*MUNICIPAL*/ AND d.document_city_id = unit_data.customer_unit_city_id AND unit_data.area_aspect_id = iaa.area_aspect_id AND unit_data.area_id = iaa.area_id) OR
         (d.document_scope_id = 3 /*ESTADUAL*/ AND d.document_state_id = unit_data.customer_unit_uf_id AND unit_data.area_aspect_id = iaa.area_aspect_id AND unit_data.area_id = iaa.area_id) OR
