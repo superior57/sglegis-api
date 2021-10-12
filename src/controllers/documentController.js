@@ -16,11 +16,10 @@ exports.getAll = (req, res, next) => {
     let sql = `
     select 
 	d.document_id, d.document_type, d.document_number, d.document_date, d.document_summary, d.document_state_id, d.document_city_id,
-	ds.document_scope_id, ds.document_scope_description,
 	d.document_status_id, ds2.status_description, d.document_privacy_type, d.document_privacy_unit_id
     from documents d
-    inner join document_scopes ds on d.document_scope_id = ds.document_scope_id 
     inner join document_status ds2 on d.document_status_id = ds2.status_id
+    inner join cities c on c.state_id = d.document_state_id and c.city_id = d.document_city_id 
     `;
 
     if (req.params.id)
@@ -34,7 +33,7 @@ exports.getAll = (req, res, next) => {
     for (let i = 0; i < Object.keys(query).length; i ++) {
         const key = Object.keys(query)[i];
         if (key.includes('id'))
-            sql += `d.${key} = '${query[key]}'`;
+            sql += `${key} = '${query[key]}'`;
         else
             sql += `${key} LIKE '%${query[key]}%'`;
         if (i < Object.keys(query).length - 1) sql += ` AND `;           

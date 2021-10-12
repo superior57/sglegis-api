@@ -22,15 +22,7 @@ exports.getAll = async (req, res, next) => {
 }
 
 exports.getQuery = async (req, res, next)=>{
-    try {
-        let sql = `SELECT *
-            FROM users u
-            LEFT JOIN customers c ON c.customer_id = u.customer_id`
-        const values = await db.sequelize.query(sql);
-        return res.send(values[0]);
-    } catch (error) {
-        next(error);        
-    }
+    base.query(users, req, res, next);
 }
 
 exports.get = (req, res, next) => {
