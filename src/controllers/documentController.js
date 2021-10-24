@@ -19,7 +19,7 @@ exports.getAll = (req, res, next) => {
 	d.document_status_id, ds2.status_description, d.document_privacy_type, d.document_privacy_unit_id
     from documents d
     inner join document_status ds2 on d.document_status_id = ds2.status_id
-    inner join cities c on c.state_id = d.document_state_id and c.city_id = d.document_city_id 
+    left join cities c on c.state_id = d.document_state_id and c.city_id = d.document_city_id 
     `;
 
     if (req.params.id)
