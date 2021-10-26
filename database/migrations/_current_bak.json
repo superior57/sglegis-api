@@ -773,13 +773,11 @@
                 },
                 "document_scope_id": {
                     "allowNull": false,
-                    "comment": "The scope this document can range (global, country, state or city) - (document_scopes model)",
                     "field": "document_scope_id",
                     "seqType": "Sequelize.INTEGER"
                 },
                 "document_type": {
                     "allowNull": true,
-                    "comment": "The type of document. Commonly is a law or standard rule (norm).",
                     "field": "document_type",
                     "seqType": "Sequelize.TEXT"
                 },
@@ -788,27 +786,23 @@
                     "defaultValue": {
                         "value": "S/N"
                     },
-                    "comment": "A control number of document",
                     "field": "document_number",
-                    "seqType": "Sequelize.STRING(100)"
+                    "seqType": "Sequelize.STRING(50)"
                 },
                 "document_date": {
                     "allowNull": false,
-                    "comment": "The date that this document was released",
                     "field": "document_date",
                     "seqType": "Sequelize.DATE"
                 },
                 "document_status_id": {
                     "allowNull": false,
-                    "comment": "The state id that this document applies (state model)",
                     "field": "document_status_id",
                     "seqType": "Sequelize.INTEGER"
                 },
                 "document_summary": {
                     "allowNull": false,
-                    "comment": "A small text that summarize the document text",
                     "field": "document_summary",
-                    "seqType": "Sequelize.STRING(5000)"
+                    "seqType": "Sequelize.STRING(2000)"
                 },
                 "document_state_id": {
                     "allowNull": true,
@@ -1304,6 +1298,6 @@
     },
     "path": "/Users/cleiton/Work/unity/github/sglegis-api/database/migrations/_current.json",
     "backupPath": "/Users/cleiton/Work/unity/github/sglegis-api/database/migrations/_current_bak.json",
-    "exists": true,
-    "revision": 2
+    "exists": false,
+    "revision": 1
 }
