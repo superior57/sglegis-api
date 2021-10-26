@@ -47,7 +47,22 @@ exports.get = (req, res, next) => {
 };
 
 exports.getItems = (req, res, next) => {
-    base.get(document_items, req, res, next, 'document_id');
+    //base.get(document_items, req, res, next, 'document_id');
+    let sql = ` SELECT
+                    document_item_id,
+                    document_item_number,
+                    document_item_order,
+                    document_item_status_id,
+                    document_item_description,
+                    document_item_observation,
+                    document_id,
+                    d.document_scope_id,
+                    createdAt,
+                    updatedAt
+                FROM document_items AS document_items
+                INNER JOIN (select d.document_id as id_document, d.document_scope_id from documents d) d on document_items.document_id = d.id_document`
+    req.query.fields = [{ fields: 'document_id', ops: 'eq', values: req.params.id }]
+    base.rawquery(sql, req, res, next);
 };
 
 exports.post = (req, res, next) => {
