@@ -16,10 +16,13 @@ exports.getAll = (req, res, next) => {
     let sql = `
     select 
 	d.document_id, d.document_type, d.document_number, d.document_date, d.document_summary, d.document_state_id, d.document_city_id,
-	d.document_status_id, ds2.status_description, d.document_privacy_type, d.document_privacy_unit_id
+	d.document_status_id, ds2.status_description, d.document_privacy_type, d.document_privacy_unit_id,
+    state.state_id, state.state_name,
+    city.city_id, city.city_name
     from documents d
     inner join document_status ds2 on d.document_status_id = ds2.status_id
-    left join cities c on c.state_id = d.document_state_id and c.city_id = d.document_city_id 
+    left join (select c.city_id, c.city_name from cities c) city on d.document_city_id = city.city_id
+    left join (select s.state_id, s.state_name from states s) state on d.document_state_id = state.state_id
     `;
 
     if (req.params.id)
