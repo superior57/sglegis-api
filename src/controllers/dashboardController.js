@@ -3,6 +3,28 @@ const base = require('./baseController');
 const db = require('../models/index');
 const sequelize = require('sequelize');
 
+exports.getCumulativeCompliance = (req, res, next) => {
+    // - 
+
+    let sql = `
+        select sum(_count) as _count,
+        conformity,
+        _period
+    from (
+    select
+        count(1) as _count,
+        getConformity(ai.audit_conformity) as conformity,
+        DATE_FORMAT(a.updatedAt, '%d %b %Y') as _period
+    from audits a
+    inner join audit_items ai on a.audit_id = ai.audits_audit_id
+    group by ai.audit_conformity, a.updatedAt) dados
+    group by conformity, _period
+    `
+    //req.query.fields = [{ fields: 'customer_id', ops: 'eq', values: req.params.id }]
+    base.rawquery(sql, req, res, next);
+}
+
+
 exports.getGeneralCompliance = (req, res, next) => {
     // - compliance geral (aplicável = SIM e compliance SIM / NAO) (%)
 
